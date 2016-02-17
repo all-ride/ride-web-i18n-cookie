@@ -1,0 +1,63 @@
+{
+    "dependencies": [
+        {
+            "class": "ride\\web\\i18n\\CookieApplicationListener",
+            "calls": [
+                {
+                    "method": "setCookieName",
+                    "arguments": [
+                        {
+                            "name": "cookieName",
+                            "type": "parameter",
+                            "properties": {
+                                "key": "i18n.cookie",
+                                "default": "_locale"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "interfaces": "ride\\library\\i18n\\locale\\negotiator\\Negotiator",
+            "class": "ride\\web\\i18n\\locale\\negotiator\\CookieNegotiator",
+            "id": "cookie",
+            "calls": [
+                {
+                    "method": "setCookieName",
+                    "arguments": [
+                        {
+                            "name": "cookieName",
+                            "type": "call",
+                            "properties": {
+                                "interface": "ride\\web\\i18n\\CookieApplicationListener",
+                                "method": "getCookieName"
+                            }
+                        }
+                    ]
+                },
+                "setLog"
+            ]
+        },
+        {
+            "interfaces": "ride\\library\\i18n\\locale\\negotiator\\Negotiator",
+            "id": "chain",
+            "extends": "chain",
+            "calls": [
+                {
+                    "method": "addNegotiator",
+                    "arguments": [
+                        {
+                            "name": "negotiator",
+                            "type": "dependency",
+                            "properties": {
+                                "interface": "ride\\library\\i18n\\locale\\negotiator\\Negotiator",
+                                "id": "cookie"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
