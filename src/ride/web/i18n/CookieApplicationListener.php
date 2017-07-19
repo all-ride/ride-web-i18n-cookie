@@ -55,8 +55,9 @@ class CookieApplicationListener {
         $cookieName = $this->getCookieName();
         $locale = $i18n->getLocale()->getCode();
         $domain = $request->getHeader(Header::HEADER_HOST);
+        $expires = time() + (365 * 24 * 60 * 60);
 
-        $cookie = new Cookie($cookieName, $locale, 0, $domain, '/', $request->isSecure());
+        $cookie = new Cookie($cookieName, $locale, $expires, $domain, '/', $request->isSecure());
 
         $response->setCookie($cookie);
     }
